@@ -1,5 +1,5 @@
 # To use environment variables within this file, we need to import the 'app'
-# variable created within our taskmanager package, defined into __init__.py:
+# variable created within our 'taskmanager' package, defined into __init__.py:
 import os
 from taskmanager import app
 

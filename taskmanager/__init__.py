@@ -24,5 +24,5 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 # assigned to a variable of 'db' and set to the instance of our Flask 'app':
 db = SQLAlchemy(app)
 
-# Finally, from our taskmanager package, we import the file called 'routes':
+# Finally, from our 'taskmanager' package, we import the file called 'routes':
 from taskmanager import routes
