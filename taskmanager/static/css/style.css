@@ -1,0 +1,11 @@
+/* Templating languages such as Flask require any internal assets to be stored in a directory called 'static' */
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}

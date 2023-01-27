@@ -27,4 +27,4 @@ from taskmanager.models import Category, Task
 # rendered_template of 'base.html', our html template:
 @app.route("/")
 def home():
-    return render_template("base.html")
+    return render_template("tasks.html")
