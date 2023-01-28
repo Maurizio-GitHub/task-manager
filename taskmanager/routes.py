@@ -30,9 +30,29 @@ def home():
     return render_template("tasks.html")
 
 
+# In addition to returning the 'categories.html' template itself, this
+# function queries our database. A new variable, 'categories' is defined.
+# To query the imported 'Category' model ('models.py'), we opt for
+# 'Category.query.all()' by adding the '.order_by()' method in between.
+# Ordering by 'Category.category_name' avoids the default sorting (by ID).
+
+# .all() method always goes to the end. It represents a Cursor Object, quite
+# similar to an array or list of records. Sometimes, Cursor Objects can be
+# confusing when used on front-end templates. Thankfully, there is a simple
+# Python method to convert them into standard Python lists: 'lists()'.
+
+# The 'categories=categories' represents a match between the variable name
+# that can be used within the HTML template ('categories.html') and variable
+# defined within our function (always keep naming convention consistent).
+
+# Whenever we call this function by clicking on the link for 'Categories',
+# it queries the database and retrieves all records from that table, sorted
+# by category name. Finally, we need to pass this variable into our rendered
+# template, so that this data can be used to display everything to our users:
 @app.route("/categories")
 def categories():
-    return render_template("categories.html")
+    categories = list(Category.query.order_by(Category.category_name).all())
+    return render_template("categories.html", categories=categories)
 
 
 # When a user clicks to add a new category, this function renders the template

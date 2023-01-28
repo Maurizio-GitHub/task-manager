@@ -11,4 +11,33 @@
     </div>
 </div>
 
+<div class="row">
+
+    <!--
+        By using the Jinja syntax of a for-loop, we make this template able to recognize multiple (added) cards.
+        We do not want them to stack on top of each other; we want them to flow within the same row, each one having their own column.
+        So, we add this for-loop just inside the abose row class.
+        To display the actual category name that is stored within our database, the card-title within this for-loop needs to use
+        our defined index variable of 'category'. Finally, dot-notation is used to tell it which key must be printed here:
+        'category.category_name', which means: "this category’s key of category_name"
+    -->
+    {% for category in categories %}
+    <div class="col s12 m6 l3">
+        <div class="card light-blue darken-4 center-align">
+
+            <div class="card-content white-text">
+                <span class="card-title">{{ category.category_name }}</span>
+            </div>
+
+            <div class="card-action">
+                <a href="#" class="btn green accent-4">Edit</a>
+                <a href="#" class="btn red">Delete</a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
 {% endblock %}
