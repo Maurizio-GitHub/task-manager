@@ -82,3 +82,36 @@ def add_category():
         db.session.commit()
         return redirect(url_for("categories"))
     return render_template("add_category.html")
+
+
+# Since (into 'categories.html') we have given an argument of 'category_id'
+# when clicking the 'Edit' button, it also needs to appear herein. These
+# types of variables being passed back into our Python functions must be
+# wrapped inside of angle-brackets within the URL.
+# We know that all of our primary keys are integers, so we can cast the
+# variable as an 'int'. This variable must also be put into the function.
+
+# For this function to know which specific category to load, we need to
+# attempt to find one in the database using the ID provided from the URL.
+# The template is expecting a variable 'category', so we created it herein:
+@app.route("/edit_category/<int:category_id>", methods=["GET", "POST"])
+def edit_category(category_id):
+    # Using the imported Category model from the top of the file, we need to
+    # query the database with a specific record we want to retrieve. The
+    # SQLAlchemy method called '.get_or_404()' works for us: it takes the
+    # argument of 'category_id' and queries the database attempting to find
+    # the specified record. If no match is found, it triggers a 404 error page:
+    category = Category.query.get_or_404(category_id)
+    # The "POST" functionality updates our database with the requested changes.
+    # If we want to update the category_name for our category variable, we set
+    # that equal to the form's name-attribute of 'category_name'. Finally,
+    # after committing the session, we redirect the users back to the
+    # categories function, which will display all of them in the cards:
+    if request.method == "POST":
+        category.category_name = request.form.get("category_name")
+        db.session.commit()
+        return redirect(url_for("categories"))
+        # Finally, we pass this migrating variable into the rendered template,
+        # which expects it to be called 'category' and to be set to the
+        # defined 'category' variable above:
+    return render_template("edit_category.html", category=category)
