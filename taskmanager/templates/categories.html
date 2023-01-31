@@ -32,11 +32,14 @@
                 we can use its index-variable to identify the specific category primary key by using '.id'.
                 In addition to calling the href-url_for() function, we need to pass another argument to specify which particular category we are attempting to update.
                 The argument name can be whatever we like, but it is best to use the primary key of the 'id'.
-                So, we call this 'category_id', and set it to be equal to the current 'category.id':
+                So, we call this 'category_id', and set it to be equal to the current 'category.id'.
+                So, since we are within the for-loop of all categories, this is using the current iteration variable of 'category',
+                and then targeting the key of 'id' from that record. The 'category_id' assigned is just the variable name we are passing into the app.route function,
+                the one we created within the 'routes.py' file:
             -->
             <div class="card-action">
                 <a href="{{ url_for('edit_category', category_id=category.id) }}" class="btn green accent-4">Edit</a>
-                <a href="#" class="btn red">Delete</a>
+                <a href="{{ url_for('delete_category', category_id=category.id) }}" class="btn red">Delete</a>
             </div>
 
         </div>

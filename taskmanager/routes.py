@@ -115,3 +115,33 @@ def edit_category(category_id):
         # which expects it to be called 'category' and to be set to the
         # defined 'category' variable above:
     return render_template("edit_category.html", category=category)
+
+
+@app.route("/delete_category/<int:category_id>")
+def delete_category(category_id):
+    category = Category.query.get_or_404(category_id)
+    db.session.delete(category)
+    db.session.commit()
+    return redirect(url_for("categories"))
+
+
+@app.route("/add_task", methods=["GET", "POST"])
+def add_task():
+    categories = list(Category.query.order_by(Category.category_name).all())
+    if request.method == "POST":
+        task = Task(
+            task_name=request.form.get("task_name"),
+            task_description=request.form.get("task_description"),
+            is_urgent=bool(True if request.form.get("is_urgent") else False),
+            due_date=request.form.get("due_date"),
+            category_id=request.form.get("category_id")
+        )
+        db.session.add(task)
+        db.session.commit()
+        return redirect(url_for("home"))
+    # This renders the template for "add_task.html", and in order for the
+    # dropdown list to display each available category, we need to pass
+    # that variable into the template. As a reminder, the first 'categories'
+    # is the variable name being used on the template itself. The second
+    # 'categories' is just the list of categories retrieved from the database:
+    return render_template("add_task.html", categories=categories)
